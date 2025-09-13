@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER MATH | Flashcards</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="game-header">
+            <h1 class="title">
+                <span class="cyber-text">CYBER</span>
+                <span class="math-text">MATH</span>
+            </h1>
+            <div class="subtitle">FLASHCARDS PROTOCOL</div>
+        </header>
+
+        <main class="config-panel">
+            <!-- Math Operations Section -->
+            <section class="config-section">
+                <h2 class="section-title">OPERATIONS</h2>
+                <div class="option-grid">
+                    <div class="option-box" data-operation="addition">
+                        <span class="operation-symbol">+</span>
+                        <span class="operation-name">ADDITION</span>
+                    </div>
+                    <div class="option-box" data-operation="subtraction">
+                        <span class="operation-symbol">−</span>
+                        <span class="operation-name">SUBTRACTION</span>
+                    </div>
+                    <div class="option-box" data-operation="multiplication">
+                        <span class="operation-symbol">×</span>
+                        <span class="operation-name">MULTIPLICATION</span>
+                    </div>
+                    <div class="option-box" data-operation="division">
+                        <span class="operation-symbol">÷</span>
+                        <span class="operation-name">DIVISION</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Number Size Section -->
+            <section class="config-section">
+                <h2 class="section-title">NUMBER RANGE</h2>
+                <div class="option-grid single-select">
+                    <div class="option-box" data-range="1-5">
+                        <span class="range-numbers">1-5</span>
+                    </div>
+                    <div class="option-box" data-range="1-10">
+                        <span class="range-numbers">1-10</span>
+                    </div>
+                    <div class="option-box" data-range="1-12">
+                        <span class="range-numbers">1-12</span>
+                    </div>
+                    <div class="option-box" data-range="1-15">
+                        <span class="range-numbers">1-15</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Question Type Section -->
+            <section class="config-section">
+                <h2 class="section-title">QUESTION MODE</h2>
+                <div class="option-grid single-select">
+                    <div class="option-box" data-type="missing-result">
+                        <span class="type-name">MISSING RESULT</span>
+                        <span class="type-example">5 + 3 = ?</span>
+                    </div>
+                    <div class="option-box" data-type="missing-operand">
+                        <span class="type-name">MISSING OPERAND</span>
+                        <span class="type-example">? + 3 = 8</span>
+                    </div>
+                    <div class="option-box" data-type="both">
+                        <span class="type-name">RANDOM MIX</span>
+                        <span class="type-example">Both Types</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Preview Card -->
+            <section class="preview-section">
+                <div class="preview-card" id="previewCard">
+                    <div class="preview-header">MISSION PREVIEW</div>
+                    <div class="preview-content">
+                        <div class="preview-item">
+                            <span class="preview-label">Operations:</span>
+                            <span class="preview-value" id="previewOps">Select operations</span>
+                        </div>
+                        <div class="preview-item">
+                            <span class="preview-label">Range:</span>
+                            <span class="preview-value" id="previewRange">Select range</span>
+                        </div>
+                        <div class="preview-item">
+                            <span class="preview-label">Mode:</span>
+                            <span class="preview-value" id="previewType">Select mode</span>
+                        </div>
+                    </div>
+                    <div class="launch-button" id="launchBtn">
+                        <span class="launch-text">LAUNCH MISSION</span>
+                        <div class="launch-indicator"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+<!-- Enhanced Footer -->
+        <footer class="cyber-footer">
+            <div class="footer-content">
+                <!-- AI Disclaimer Section -->
+                <div class="footer-section">
+                    <h4 class="footer-title">
+                        <span class="footer-icon">🤖</span>
+                        AI GENERATION PROTOCOL
+                    </h4>
+                    <div class="disclaimer-text">
+                        <span class="warning-label">ADVISORY:</span> This application was generated using <span class="ai-highlight">Claude Sonnet 4</span> advanced AI systems. While optimized for educational accuracy, AI-generated content may contain computational errors or misaligned algorithms. <span class="verify-notice">Always cross-reference with official mathematical resources</span> and educational authorities for verification.
+                    </div>
+                </div>
+
+                <!-- Project Resources Section -->
+                <div class="footer-section">
+                    <h4 class="footer-title">
+                        <span class="footer-icon">🔗</span>
+                        PROJECT ARCHIVES
+                    </h4>
+                    <div class="footer-links">
+                        <a href="https://github.com/JD-Jones-ASES/cyber-math-flashcards/" target="_blank" class="cyber-link">
+                            <span class="link-icon">📚</span>
+                            <span class="link-text">ACCESS REPOSITORY & LICENSE</span>
+                        </a>
+                        <a href="https://paypal.me/jdjonestexas" target="_blank" class="cyber-link">
+                            <span class="link-icon">☕</span>
+                            <span class="link-text">SUPPORT ONGOING PROJECTS</span>
+                        </a>
+                    </div>
+                    <div class="support-note">
+                        Contributions not required • Appreciation acknowledged
+                    </div>
+                </div>
+
+                <!-- Copyright Section -->
+                <div class="footer-section">
+                    <div class="copyright-text">
+                        <span class="copyright-main">© 2025 JD JONES</span> • 
+                        <span class="license-info">MIT LICENSE PROTOCOL</span><br>
+                        <span class="usage-rights">Open source • Distribute freely • Educational purpose optimized</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <div class="bg-grid"></div>
+        <div class="bg-particles"></div>
+    </div>
+
+
+        <div class="bg-grid"></div>
+        <div class="bg-particles"></div>
+    </div>
+
+    <script>
+        // Configuration state
+        let config = {
+            operations: [],
+            range: null,
+            type: null
+        };
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSelections();
+            updatePreview();
+        });
+
+        function initializeSelections() {
+            // Operation selection (multi-select)
+            document.querySelectorAll('[data-operation]').forEach(box => {
+                box.addEventListener('click', function() {
+                    const operation = this.dataset.operation;
+                    
+                    if (config.operations.includes(operation)) {
+                        config.operations = config.operations.filter(op => op !== operation);
+                        this.classList.remove('selected');
+                    } else {
+                        config.operations.push(operation);
+                        this.classList.add('selected');
+                    }
+                    
+                    updatePreview();
+                });
+            });
+
+            // Range selection (single-select)
+            document.querySelectorAll('[data-range]').forEach(box => {
+                box.addEventListener('click', function() {
+                    document.querySelectorAll('[data-range]').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    config.range = this.dataset.range;
+                    updatePreview();
+                });
+            });
+
+            // Type selection (single-select)
+            document.querySelectorAll('[data-type]').forEach(box => {
+                box.addEventListener('click', function() {
+                    document.querySelectorAll('[data-type]').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    config.type = this.dataset.type;
+                    updatePreview();
+                });
+            });
+
+            // Launch button
+            document.getElementById('launchBtn').addEventListener('click', launchGame);
+        }
+
+        function updatePreview() {
+            // Update operations display
+            const opsDisplay = config.operations.length > 0 
+                ? config.operations.map(op => op.charAt(0).toUpperCase() + op.slice(1)).join(', ')
+                : 'Select operations';
+            document.getElementById('previewOps').textContent = opsDisplay;
+
+            // Update range display
+            document.getElementById('previewRange').textContent = config.range || 'Select range';
+
+            // Update type display
+            const typeNames = {
+                'missing-result': 'Missing Result',
+                'missing-operand': 'Missing Operand',
+                'both': 'Random Mix'
+            };
+            document.getElementById('previewType').textContent = config.type ? typeNames[config.type] : 'Select mode';
+
+            // Update launch button state
+            const launchBtn = document.getElementById('launchBtn');
+            const canLaunch = config.operations.length > 0 && config.range && config.type;
+            
+            launchBtn.classList.toggle('ready', canLaunch);
+            launchBtn.style.pointerEvents = canLaunch ? 'auto' : 'none';
+        }
+
+        function launchGame() {
+            if (config.operations.length === 0 || !config.range || !config.type) {
+                return;
+            }
+
+            // Store config in sessionStorage
+            sessionStorage.setItem('mathConfig', JSON.stringify(config));
+            
+            // Navigate to game
+            window.location.href = 'game.html';
+        }
+
+        // Add some visual flair
+        function createParticles() {
+            const particleContainer = document.querySelector('.bg-particles');
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particleContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize particles after page load
+        window.addEventListener('load', createParticles);
+    </script>
+</body>
+</html>

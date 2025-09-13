@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER MATH | Game Mode</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="game-mode">
+    <div class="game-container">
+        <!-- Header with stats -->
+        <header class="game-stats">
+            <div class="stat-item" id="timerStat">
+                <span class="stat-label">TIME</span>
+                <span class="stat-value" id="timerValue">00:00</span>
+            </div>
+            <div class="stat-item" id="streakStat">
+                <span class="stat-label">STREAK</span>
+                <span class="stat-value" id="streakValue">0</span>
+            </div>
+            <div class="stat-item" id="accuracyStat">
+                <span class="stat-label">ACCURACY</span>
+                <span class="stat-value" id="accuracyValue">100%</span>
+            </div>
+            <button class="toggle-stats" id="toggleStats" title="Toggle Stats">
+                <span class="toggle-icon">◐</span>
+            </button>
+        </header>
+
+        <!-- Main game area -->
+        <main class="equation-display">
+            <div class="equation-container">
+                <div class="operand-box" id="operand1">
+                    <span class="operand-value">5</span>
+                </div>
+                
+                <div class="operator-box">
+                    <span class="operator-symbol" id="operator">+</span>
+                </div>
+                
+                <div class="operand-box" id="operand2">
+                    <span class="operand-value">3</span>
+                </div>
+                
+                <div class="equals-box">
+                    <span class="equals-symbol">=</span>
+                </div>
+                
+                <div class="result-box" id="result">
+                    <span class="result-value">?</span>
+                </div>
+            </div>
+
+            <!-- Answer input -->
+            <div class="answer-section">
+                <input type="number" id="answerInput" class="answer-input" placeholder="Enter answer" autocomplete="off">
+                <button id="submitBtn" class="answer-button">
+                    <span class="button-text">ANSWER</span>
+                </button>
+            </div>
+
+            <!-- Feedback display -->
+            <div class="feedback-container" id="feedbackContainer">
+                <div class="feedback-message" id="feedbackMessage"></div>
+            </div>
+        </main>
+
+        <!-- Control panel -->
+        <div class="control-panel">
+            <button id="returnBtn" class="control-button return-button">
+                <span class="button-icon">←</span>
+                <span class="button-text">RETURN</span>
+            </button>
+            <div class="mission-info" id="missionInfo">
+                <span class="mission-text">Loading mission parameters...</span>
+            </div>
+        </div>
+
+        <!-- Background elements -->
+        <div class="bg-grid"></div>
+        <div class="bg-scanlines"></div>
+    </div>
+
+    <script>
+        // Game state
+        let gameState = {
+            config: null,
+            currentQuestion: null,
+            stats: {
+                startTime: null,
+                correct: 0,
+                total: 0,
+                streak: 0,
+                maxStreak: 0
+            },
+            timerInterval: null,
+            statsVisible: true
+        };
+
+        // Initialize game
+        document.addEventListener('DOMContentLoaded', function() {
+            loadConfig();
+            initializeGame();
+            generateQuestion();
+            startTimer();
+        });
+
+        function loadConfig() {
+            const configData = sessionStorage.getItem('mathConfig');
+            if (!configData) {
+                alert('No configuration found. Redirecting to main menu.');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            gameState.config = JSON.parse(configData);
+            updateMissionInfo();
+        }
+
+        function initializeGame() {
+            // Answer input handling
+            const answerInput = document.getElementById('answerInput');
+            const submitBtn = document.getElementById('submitBtn');
+
+            answerInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkAnswer();
+                }
+            });
+
+            answerInput.addEventListener('input', function() {
+                submitBtn.classList.toggle('active', this.value.trim() !== '');
+            });
+
+            submitBtn.addEventListener('click', checkAnswer);
+
+            // Return button
+            document.getElementById('returnBtn').addEventListener('click', function() {
+                if (confirm('Return to main menu? Your progress will be lost.')) {
+                    window.location.href = 'index.html';
+                }
+            });
+
+            // Stats toggle
+            document.getElementById('toggleStats').addEventListener('click', toggleStats);
+
+            // Focus input
+            answerInput.focus();
+
+            // Initialize stats
+            gameState.stats.startTime = Date.now();
+        }
+
+        function generateQuestion() {
+            const config = gameState.config;
+            const operations = config.operations;
+            const [min, max] = config.range.split('-').map(Number);
+            
+            // Choose random operation
+            const operation = operations[Math.floor(Math.random() * operations.length)];
+            
+            // Generate operands
+            let operand1, operand2, result;
+            
+            switch (operation) {
+                case 'addition':
+                    operand1 = Math.floor(Math.random() * (max - min + 1)) + min;
+                    operand2 = Math.floor(Math.random() * (max - min + 1)) + min;
+                    result = operand1 + operand2;
+                    break;
+                    
+                case 'subtraction':
+                    // Ensure positive result
+                    operand1 = Math.floor(Math.random() * (max - min + 1)) + min;
+                    operand2 = Math.floor(Math.random() * operand1) + 1;
+                    result = operand1 - operand2;
+                    break;
+                    
+                case 'multiplication':
+                    operand1 = Math.floor(Math.random() * (max - min + 1)) + min;
+                    operand2 = Math.floor(Math.random() * (max - min + 1)) + min;
+                    result = operand1 * operand2;
+                    break;
+                    
+                case 'division':
+                    // Generate factors to ensure whole number result
+                    result = Math.floor(Math.random() * (max - min + 1)) + min;
+                    operand2 = Math.floor(Math.random() * (max - min + 1)) + min;
+                    operand1 = result * operand2;
+                    break;
+            }
+
+            // Determine what to hide based on question type
+            let questionType = config.type;
+            if (questionType === 'both') {
+                questionType = Math.random() < 0.5 ? 'missing-result' : 'missing-operand';
+            }
+
+            let hiddenValue, expectedAnswer;
+            
+            if (questionType === 'missing-result') {
+                hiddenValue = 'result';
+                expectedAnswer = result;
+            } else {
+                // For missing operand, randomly choose which operand to hide
+                if (Math.random() < 0.5) {
+                    hiddenValue = 'operand1';
+                    expectedAnswer = operand1;
+                } else {
+                    hiddenValue = 'operand2';
+                    expectedAnswer = operand2;
+                }
+            }
+
+            gameState.currentQuestion = {
+                operand1,
+                operand2,
+                result,
+                operation,
+                hiddenValue,
+                expectedAnswer
+            };
+
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const q = gameState.currentQuestion;
+            const operatorSymbols = {
+                addition: '+',
+                subtraction: '−',
+                multiplication: '×',
+                division: '÷'
+            };
+
+            // Update operator
+            document.getElementById('operator').textContent = operatorSymbols[q.operation];
+
+            // Update operands and result
+            document.getElementById('operand1').querySelector('.operand-value').textContent = 
+                q.hiddenValue === 'operand1' ? '?' : q.operand1;
+            
+            document.getElementById('operand2').querySelector('.operand-value').textContent = 
+                q.hiddenValue === 'operand2' ? '?' : q.operand2;
+            
+            document.getElementById('result').querySelector('.result-value').textContent = 
+                q.hiddenValue === 'result' ? '?' : q.result;
+
+            // Highlight the missing element
+            document.querySelectorAll('.operand-box, .result-box').forEach(box => {
+                box.classList.remove('missing');
+            });
+            
+            if (q.hiddenValue === 'operand1') {
+                document.getElementById('operand1').classList.add('missing');
+            } else if (q.hiddenValue === 'operand2') {
+                document.getElementById('operand2').classList.add('missing');
+            } else {
+                document.getElementById('result').classList.add('missing');
+            }
+
+            // Clear input and feedback
+            document.getElementById('answerInput').value = '';
+            document.getElementById('answerInput').focus();
+            document.getElementById('submitBtn').classList.remove('active');
+            hideFeedback();
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('answerInput').value);
+            const correctAnswer = gameState.currentQuestion.expectedAnswer;
+            
+            if (isNaN(userAnswer)) {
+                showFeedback('Enter a valid number', 'error');
+                return;
+            }
+
+            gameState.stats.total++;
+            
+            if (userAnswer === correctAnswer) {
+                gameState.stats.correct++;
+                gameState.stats.streak++;
+                gameState.stats.maxStreak = Math.max(gameState.stats.maxStreak, gameState.stats.streak);
+                
+                showFeedback('CORRECT!', 'success');
+                animateSuccess();
+                
+                setTimeout(() => {
+                    generateQuestion();
+                }, 1500);
+            } else {
+                gameState.stats.streak = 0;
+                showFeedback(`INCORRECT. Answer: ${correctAnswer}`, 'error');
+                animateError();
+            }
+            
+            updateStats();
+        }
+
+        function showFeedback(message, type) {
+            const feedbackContainer = document.getElementById('feedbackContainer');
+            const feedbackMessage = document.getElementById('feedbackMessage');
+            
+            feedbackMessage.textContent = message;
+            feedbackContainer.className = `feedback-container ${type} visible`;
+        }
+
+        function hideFeedback() {
+            document.getElementById('feedbackContainer').classList.remove('visible');
+        }
+
+        function animateSuccess() {
+            document.querySelector('.equation-container').classList.add('success-pulse');
+            setTimeout(() => {
+                document.querySelector('.equation-container').classList.remove('success-pulse');
+            }, 600);
+        }
+
+        function animateError() {
+            document.querySelector('.equation-container').classList.add('error-shake');
+            setTimeout(() => {
+                document.querySelector('.equation-container').classList.remove('error-shake');
+            }, 600);
+        }
+
+        function updateStats() {
+            const accuracy = gameState.stats.total > 0 
+                ? Math.round((gameState.stats.correct / gameState.stats.total) * 100)
+                : 100;
+            
+            document.getElementById('streakValue').textContent = gameState.stats.streak;
+            document.getElementById('accuracyValue').textContent = accuracy + '%';
+        }
+
+        function startTimer() {
+            gameState.timerInterval = setInterval(() => {
+                const elapsed = Date.now() - gameState.stats.startTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                
+                document.getElementById('timerValue').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function toggleStats() {
+            gameState.statsVisible = !gameState.statsVisible;
+            const statsHeader = document.querySelector('.game-stats');
+            
+            if (gameState.statsVisible) {
+                statsHeader.classList.remove('hidden');
+            } else {
+                statsHeader.classList.add('hidden');
+            }
+        }
+
+        function updateMissionInfo() {
+            const config = gameState.config;
+            const operations = config.operations.join(', ');
+            const missionText = `${operations.toUpperCase()} | Range: ${config.range} | Mode: ${config.type.replace('-', ' ').toUpperCase()}`;
+            document.getElementById('missionInfo').querySelector('.mission-text').textContent = missionText;
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            if (gameState.timerInterval) {
+                clearInterval(gameState.timerInterval);
+            }
+        });
+    </script>
+</body>
+</html>

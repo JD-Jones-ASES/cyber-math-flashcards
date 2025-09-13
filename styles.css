@@ -793,7 +793,6 @@ body {
     }
 }
 
-
 /* Feedback Container */
 .feedback-container {
     min-height: 60px;
@@ -882,51 +881,157 @@ body {
     text-align: center;
 }
 
-/* Responsive Design */
+/* MOBILE OPTIMIZATIONS */
 @media (max-width: 768px) {
+    /* General mobile adjustments */
     .title {
         font-size: 2.5rem;
     }
     
+    /* Game Mode Mobile Optimizations */
+    .game-mode .game-container {
+        padding: 0.5rem;
+        gap: 0;
+        min-height: 100vh;
+        justify-content: space-between;
+    }
+    
+    /* Compact game stats */
+    .game-stats {
+        padding: 0.8rem 1rem;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+    }
+    
+    .stat-item {
+        margin: 0 0.5rem;
+    }
+    
+    .stat-label {
+        font-size: 0.7rem;
+        margin-bottom: 0.2rem;
+    }
+    
+    .stat-value {
+        font-size: 1.2rem;
+    }
+    
+    .toggle-stats {
+        width: 35px;
+        height: 35px;
+    }
+    
+    /* Compact equation display */
+    .equation-display {
+        margin: 1rem 0;
+        flex: 1;
+        justify-content: center;
+    }
+    
     .equation-container {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1.5rem;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        border-radius: 12px;
+        max-width: 100%;
+        justify-content: center;
+    }
+    
+    /* Smaller equation elements */
+    .operand-box, .result-box {
+        min-width: 50px;
+        min-height: 50px;
+        padding: 0.8rem;
+        border-radius: 8px;
+    }
+    
+    .operator-box, .equals-box {
+        min-width: 30px;
+        min-height: 50px;
+        padding: 0.5rem;
     }
     
     .operand-value, .result-value {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     .operator-symbol, .equals-symbol {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     
-    .game-stats {
-        padding: 1rem;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-    
-    .control-panel {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
+    /* Compact answer section */
     .answer-section {
-        flex-direction: column;
-        gap: 1rem;
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+        align-items: stretch;
     }
     
     .answer-input {
-        width: 100%;
-        max-width: 300px;
+        padding: 0.8rem 1rem;
+        font-size: 1.3rem;
+        min-width: 120px;
+        flex: 1;
+        max-width: 150px;
+    }
+    
+    .answer-button {
+        padding: 0.8rem 1.2rem;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+    
+    /* Compact feedback */
+    .feedback-container {
+        min-height: 40px;
+        margin-bottom: 0.5rem;
+    }
+    
+    .feedback-message {
+        font-size: 1.1rem;
+        padding: 0.6rem 1rem;
+        border-radius: 6px;
+    }
+    
+    /* Compact control panel */
+    .control-panel {
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 1rem;
+        padding: 0.5rem;
+        gap: 0.5rem;
+    }
+    
+    .control-button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+    }
+    
+    .mission-info {
+        padding: 0.6rem 1rem;
+        max-width: none;
+        flex: 1;
+        margin-left: 0.5rem;
+    }
+    
+    .mission-text {
+        font-size: 0.8rem;
+        line-height: 1.2;
+    }
+    
+    /* Optimize vertical spacing for single-screen view */
+    .equation-display {
+        min-height: 0;
+        padding: 0;
     }
 }
 
+/* Extra small mobile devices */
 @media (max-width: 480px) {
     .container, .game-container {
-        padding: 1rem;
+        padding: 0.5rem;
     }
     
     .title {
@@ -937,9 +1042,203 @@ body {
         grid-template-columns: 1fr;
     }
     
+    /* Ultra-compact game mode for small screens */
+    .game-mode .game-container {
+        padding: 0.3rem;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    /* Very compact stats */
+    .game-stats {
+        padding: 0.6rem 0.8rem;
+        margin-bottom: 0.8rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .stat-item {
+        margin: 0 0.3rem;
+        min-width: 60px;
+    }
+    
+    .stat-label {
+        font-size: 0.65rem;
+    }
+    
+    .stat-value {
+        font-size: 1rem;
+    }
+    
+    .toggle-stats {
+        width: 30px;
+        height: 30px;
+        order: 1;
+        margin-left: auto;
+    }
+    
+    .toggle-icon {
+        font-size: 1rem;
+    }
+    
+    /* Ultra-compact equation */
     .equation-container {
-        padding: 1rem;
-        margin-bottom: 2rem;
+        gap: 0.5rem;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .operand-box, .result-box {
+        min-width: 45px;
+        min-height: 45px;
+        padding: 0.6rem;
+    }
+    
+    .operator-box, .equals-box {
+        min-width: 25px;
+        min-height: 45px;
+        padding: 0.4rem;
+    }
+    
+    .operand-value, .result-value {
+        font-size: 1.5rem;
+    }
+    
+    .operator-symbol, .equals-symbol {
+        font-size: 1.8rem;
+    }
+    
+    /* Ultra-compact answer section */
+    .answer-section {
+        flex-direction: row;
+        gap: 0.6rem;
+        margin-bottom: 0.8rem;
+        padding: 0 0.5rem;
+    }
+    
+    .answer-input {
+        padding: 0.7rem 0.8rem;
+        font-size: 1.2rem;
+        min-width: 100px;
+        flex: 1;
+        max-width: 130px;
+    }
+    
+    .answer-button {
+        padding: 0.7rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Ultra-compact feedback */
+    .feedback-container {
+        min-height: 35px;
+        margin-bottom: 0.3rem;
+    }
+    
+    .feedback-message {
+        font-size: 1rem;
+        padding: 0.5rem 0.8rem;
+    }
+    
+    /* Ultra-compact control panel */
+    .control-panel {
+        margin-top: 0.8rem;
+        padding: 0.3rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .control-button {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .mission-info {
+        padding: 0.5rem 0.8rem;
+        margin: 0;
+        width: 100%;
+    }
+    
+    .mission-text {
+        font-size: 0.75rem;
+    }
+    
+    /* Ensure everything fits in viewport */
+    .equation-display {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 0;
+    }
+}
+
+/* Landscape orientation on small devices */
+@media (max-width: 768px) and (orientation: landscape) {
+    .game-mode .game-container {
+        padding: 0.3rem;
+    }
+    
+    .game-stats {
+        margin-bottom: 0.5rem;
+        padding: 0.5rem 1rem;
+    }
+    
+    .equation-container {
+        margin-bottom: 0.8rem;
+        padding: 0.8rem;
+        gap: 0.6rem;
+    }
+    
+    .operand-box, .result-box {
+        min-height: 40px;
+        padding: 0.5rem 0.8rem;
+    }
+    
+    .operator-box, .equals-box {
+        min-height: 40px;
+    }
+    
+    .operand-value, .result-value {
+        font-size: 1.4rem;
+    }
+    
+    .operator-symbol, .equals-symbol {
+        font-size: 1.6rem;
+    }
+    
+    .answer-section {
+        margin-bottom: 0.6rem;
+    }
+    
+    .control-panel {
+        margin-top: 0.5rem;
+        padding: 0.3rem;
+    }
+    
+    .feedback-container {
+        min-height: 30px;
+    }
+    
+    .feedback-message {
+        font-size: 0.95rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+/* Portrait tablets */
+@media (min-width: 481px) and (max-width: 768px) {
+    .equation-container {
+        flex-direction: row;
+        gap: 1.2rem;
+        padding: 1.2rem;
     }
     
     .operand-box, .result-box {
@@ -949,10 +1248,38 @@ body {
     }
     
     .operand-value, .result-value {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
     
     .operator-symbol, .equals-symbol {
-        font-size: 2rem;
+        font-size: 2.2rem;
+    }
+}
+
+/* Ensure touch targets are adequate */
+@media (pointer: coarse) {
+    .answer-button, .control-button, .toggle-stats {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .answer-input {
+        min-height: 44px;
+    }
+    
+    .option-box {
+        min-height: 60px;
+    }
+    
+    .launch-button {
+        min-height: 50px;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .operand-value, .result-value, .operator-symbol, .equals-symbol {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 }
